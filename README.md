@@ -61,7 +61,8 @@ And set the new namespaces the current context.
 ```bash
 kubectl config set-context --current --namespace=monitoring-easy
 ```
-## Install ingress controller
+
+## Install ingress controller
 
 To make the access more ease we have prepared a basic ingress-controller using the comunity version of Nginx ingress controller, you can install it localy using next command:
 
@@ -69,7 +70,8 @@ To make the access more ease we have prepared a basic ingress-controller using t
 helm install proxy proxy
 ```
 
-## Install grafana and prometheus
+## Install grafana and prometheus
+
 In order to install the tools needed you can simply run next commend to install the chart that aready includes Grafana and Prometheus as dependencies and will leave the cluster ready
 to start colecting and showing data.
 
