@@ -1,0 +1,11 @@
+# Default values for proxy.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+ingress-nginx:
+  enabled: true
+  controller:
+    metrics:
+      enabled: true
+    podAnnotations:
+      prometheus.io/scrape: true
+      prometheus.io/port: "10254"
