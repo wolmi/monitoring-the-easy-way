@@ -1,0 +1,19 @@
+{{ $root := . }}
+{{ range $path, $bytes := .Files.Glob "dashboards/*.json" }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "service-example.fullname" $root }}-dashboard-{{ regexFind "[^/]+$" $path }}
+  labels:
+    grafana_dashboard: "1"
+    app: {{ template "service-example.name" $root }}
+    chart: {{ template "service-example.chart" $root }}
+    release: {{ $root.Release.Name }}
+    heritage: {{ $root.Release.Service }}
+  annotations:
+    k8s-sidecar-target-directory: "/var/lib/grafana/dashboards/default"
+data:
+{{- regexFind "[^/]+$" $path | nindent 2 }}: |-
+{{-  $root.Files.Get $path | nindent 4}}
+{{ end -}}
