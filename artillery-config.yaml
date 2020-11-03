@@ -1,0 +1,13 @@
+config:
+  target: http://localhost:3000
+  phases:
+    - duration: 100
+      arrivalRate: 3
+
+scenarios:
+  - flow:
+      - get:
+          url: "/checkout"
+  - flow:
+      - get:
+          url: "/bad"
