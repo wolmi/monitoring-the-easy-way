@@ -8,6 +8,16 @@ grafana:
   service:
     type: NodePort
     port: 3000
+  ingress:
+    enabled: true
+    # Values can be templated
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    labels: {}
+    path: /
+    hosts:
+      - grafana.localhost
   sidecar:
     dashboards:
       enabled: true
