@@ -1,0 +1,17 @@
+{{ $root := . }}
+{{ range $path, $bytes := .Files.Glob "datasources/*.yaml" }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "monitoring-stack.fullname" $root }}-datasource-{{ regexFind "[^/]+$" $path }}
+  labels:
+    grafana_datasource: "1"
+    app: {{ template "monitoring-stack.name" $root }}
+    chart: {{ template "monitoring-stack.chart" $root }}
+    release: {{ $root.Release.Name }}
+    heritage: {{ $root.Release.Service }}
+data:
+{{- regexFind "[^/]+$" $path | nindent 2 }}: |-
+{{-  $root.Files.Get $path | nindent 4}}
+{{ end -}}

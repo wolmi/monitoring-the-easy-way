@@ -1,0 +1,33 @@
+# Default values for monitoring-stack.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+nameOverride: ""
+fullnameOverride: ""
+grafana:
+  enabled: true
+  service:
+    type: NodePort
+    port: 3000
+  sidecar:
+    dashboards:
+      enabled: true
+      folder: /var/lib/grafana/dashboards
+    datasources:
+      enabled: true
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+      - name: 'default'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: true
+        editable: false
+        options:
+          path: /var/lib/grafana/dashboards/default
+
+
+prometheus:
+  enabled: true
+
