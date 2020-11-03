@@ -34,15 +34,41 @@ helm repo add stable https://charts.helm.sh/stable
 
 ### Extra repositories
 
-AS a more complete environment 3 more repositories can be added to have acces to more charts:
+AS a more complete environment 4 more repositories can be added to have acces to more charts:
 
 ```bash
 helm repo add kiwigrid https://kiwigrid.github.io
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo add prometheus-comunity https://prometheus-community.github.io/helm-charts
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+```
+
+Don't forget to update your repository list
+
+```bash
+helm repo update
+```
+
+# Install ingress controller
+
+To make the access more ease we have prepared a basic ingress-controller using the comunity version of Nginx ingress controller, you can install it localy using next command:
+
+```bash
+helm install proxy proxy
 ```
 
 # Installing the tools
+
+First we need to create a namespace.
+
+```bash
+kubectl create monitoring-easy
+```
+And set the new namespaces the current context.
+
+```bash
+kubectl config set-context --current --namespace=monitoring-easy
+```
 
 In order to install the tools needed you can simply run next commend to install the chart that aready includes Grafana and Prometheus as dependencies and will leave the cluster ready
 to start colecting and showing data.
@@ -65,6 +91,14 @@ export GRAFANA_PORT=$(kubectl get service -o jsonpath="{.spec.ports[0].nodePort}
 echo http://localhost:$GRAFANA_PORT
 ```
 
+# Install example service
+
+This repository includes a basic server example that can be used to generate metrics and test the environment. You can install using next command:
+
+```bash
+helm install lab service-example
+```
+
 # Install artillery
 
 To demonstrate the different metris a benchmark tool is needed, one easy way to perform a load test is to use [artillery](https://artillery.io/) you can install it by running next command:
@@ -72,6 +106,3 @@ To demonstrate the different metris a benchmark tool is needed, one easy way to 
 ```bash
 sudo npm install -g artillery --allow-root --unsafe-perm=true
 ```
-
-# Install example service
-
