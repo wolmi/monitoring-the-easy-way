@@ -54,7 +54,7 @@ helm repo update
 First we need to create a namespace.
 
 ```bash
-kubectl create monitoring-easy
+kubectl create namespace monitoring-easy
 ```
 And set the new namespaces the current context.
 
@@ -98,7 +98,8 @@ echo http://localhost:$GRAFANA_PORT
 This repository includes a basic server example that can be used to generate metrics and test the environment. You can install using next command:
 
 ```bash
-helm install lab service-example
+cd service-example
+helm install lab chart
 ```
 
 # Install artillery
